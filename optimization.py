@@ -66,21 +66,40 @@ rotatem24 = cv2.getRotationMatrix2D((image4_xy[0][0], image4_xy[0][1]), image24_
 start = cv2.getTickCount()
 
 #1, 3번 화면
+s = cv2.getTickCount()
 image1 = cv2.imread(path_01, cv2.IMREAD_COLOR)
+e = cv2.getTickCount()
+print("img1 load : {}".format((e-s)/cv2.getTickFrequency()))
 
+
+s = cv2.getTickCount()
 image3 = cv2.imread(path_03, cv2.IMREAD_COLOR)
-
+e = cv2.getTickCount()
+print("img3 load : {}".format((e-s)/cv2.getTickFrequency()))
 im3h, im3w, im3c =image3.shape
 
 # print(rotatem)
 
+s = cv2.getTickCount()
 image3_rotate = cv2.warpAffine(image3, rotatem13, (im3w, im3h))
+e = cv2.getTickCount()
+print("img3 affine : {}".format((e-s)/cv2.getTickFrequency()))
 
 
-
+s = cv2.getTickCount()
 image1_crop = image1[:image1_xy[0][1], :] # 1번 아래쪽 컷
+e = cv2.getTickCount()
+print("img1 crop : {}".format((e-s)/cv2.getTickFrequency()))
+
+s = cv2.getTickCount()
 image3_crop = image3_rotate[image3_xy[0][1]:, :] # 3번 위쪽 컷
+e = cv2.getTickCount()
+print("img3 crop : {}".format((e-s)/cv2.getTickFrequency()))
+
+s = cv2.getTickCount()
 image13_crop = cv2.vconcat([image1_crop, image3_crop])[image1_xy[0][1] - screen_height : image1_xy[0][1] + screen_height ,image1_xy[0][0]-screen_width:image1_xy[0][0]] # 1,3 concat 오른쪽 컷
+e = cv2.getTickCount()
+print("img13 vconcat : {}".format((e-s)/cv2.getTickFrequency()))
 
 #2, 4번 화면
 
